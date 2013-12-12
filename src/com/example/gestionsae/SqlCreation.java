@@ -37,7 +37,7 @@ public class SqlCreation extends SQLiteOpenHelper{
 			+ TBL_PRESENCE_FKDATE + " INTEGER NOT NULL, "
 			+ TBL_PRESENCE_FKNOM + " INTEGER NOT NULL, "
 			+ "FOREIGN KEY(" + TBL_PRESENCE_FKDATE + ") REFERENCES " + TBL_DATE + "(" + TBL_DATE_ID + "), "
-			+ "FOREIGN KEY(" + TBL_PRESENCE_FKNOM + ") REFERENES " + TBL_MEMBRE + "(" + TBL_MEMBRE_ID + ")"
+			+ "FOREIGN KEY(" + TBL_PRESENCE_FKNOM + ") REFERENCES " + TBL_MEMBRE + "(" + TBL_MEMBRE_ID + ")"
 			+ ");";
 	
 	private static final String PRAGMA = "PRAGMA foreign_keys=ON;";

@@ -2,6 +2,7 @@ package com.example.gestionsae;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 
 public class MainActivity extends Activity {
 	
@@ -48,11 +50,10 @@ public class MainActivity extends Activity {
 	protected Dialog onCreateDialog(int id) {
 		
 		//Définition de la date sous forme yyyy-mm-dd
-		SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String aujourdhui = dFormat.format(new Date());
-		int btYear = Integer.parseInt(aujourdhui.substring(0,3));
-		int btMonth = Integer.parseInt(aujourdhui.substring(5, 6));
-		int btDay = Integer.parseInt(aujourdhui.substring(8, 9));
+		Calendar aujourdhui = Calendar.getInstance();
+		int btYear = aujourdhui.get(Calendar.YEAR);
+		int btMonth = aujourdhui.get(Calendar.MONTH);
+		int btDay = aujourdhui.get(Calendar.DAY_OF_MONTH);
 		
 		return new DatePickerDialog(this, pickerListener, btYear, btMonth, btDay);
 	}
@@ -64,6 +65,7 @@ public class MainActivity extends Activity {
 			String newSeance = Integer.toString(year) + "-" + Integer.toString(monthOfYear + 1) + "-" + Integer.toString(dayOfMonth);
 			saedb.setNewSeance(newSeance);
 			
+			Intent presence = new Intent(MainActivity.this, PresenceActivity.class);
 			startActivity(presence);
 		}
 	};
