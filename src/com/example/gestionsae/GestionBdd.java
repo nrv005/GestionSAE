@@ -2,6 +2,7 @@ package com.example.gestionsae;
 
 import java.util.ArrayList;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -84,5 +85,12 @@ public class GestionBdd {
 		//Fermer le cursor pour rendre la mémoire puis retourner le résultat
 		cAllDate.close();
 		return retAllDate;
+	}
+
+	public void setNewSeance(String newSeance) {
+		
+		ContentValues values = new ContentValues();
+		values.put(DATE_COL_JOUR, newSeance);
+		bdd.insert(TBL_DATE, DATE_COL_JOUR, values);
 	}
 }
