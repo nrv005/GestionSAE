@@ -144,25 +144,31 @@ public class GestionBdd {
 		Cursor cAllMembre = bdd.query(TBL_MEMBRE, null, null, null, null, null, MEMBRE_COL_ORDER);
 		return cursorToMembre(cAllMembre);
 	}
-
-	private ArrayList<Membre> cursorToMembre(Cursor cAllMembre) {
+	
+	
+	/**
+	 * cursorToMembre : Transforme un cursor en ArrayList<Membre> de membre
+	 * @param cMembre : Cursor, à traiter
+	 * @return ArrayList<Membre> 
+	 */
+	private ArrayList<Membre> cursorToMembre(Cursor cMembre) {
 		
 		//Si la table des membres est vide
-		if (cAllMembre.getCount() == 0) return new ArrayList<Membre>(0);
+		if (cMembre.getCount() == 0) return new ArrayList<Membre>(0);
 		
 		//Récupère les données de tous les membres dans un ArrayList
-		ArrayList<Membre> retAllMembre = new ArrayList<Membre>(cAllMembre.getCount());
-		cAllMembre.moveToFirst();
+		ArrayList<Membre> retAllMembre = new ArrayList<Membre>(cMembre.getCount());
+		cMembre.moveToFirst();
 		do {
 			Membre nMembre = new Membre();
-			nMembre.setId(cAllMembre.getInt(0));
-			nMembre.setNom(cAllMembre.getString(1));
-			nMembre.setPrenom(cAllMembre.getString(2));
+			nMembre.setId(cMembre.getInt(0));
+			nMembre.setNom(cMembre.getString(1));
+			nMembre.setPrenom(cMembre.getString(2));
 			retAllMembre.add(nMembre);
-		} while (cAllMembre.moveToNext());
+		} while (cMembre.moveToNext());
 		
 		//Ferme le cursor pour libérer les ressources puis renvoie l'ArrayList
-		cAllMembre.close();
+		cMembre.close();
 		return retAllMembre;
 	}
 
@@ -205,4 +211,20 @@ public class GestionBdd {
 		
 		bdd.delete(TBL_PRESENCE, where, valeur);
 	}
+	
+	
+	/**
+	 * getPresent : Selection les membres présent pour la date donnée
+	 * @param idSeance
+	 * @return cursorToMembre : Transforme le Cursor en ArrayList<Membre> pour affichage
+	 */
+	public ArrayList<Membre> getPresent(long idSeance) {
+		
+		String myQuery = "SELECT membre.mid, membre.nom, membre.prenom FROM membre JOIN presence WHERE membre.mid=presence.fknom AND presence.fkdate=? ORDER BY membre.nom,membre.prenom";
+		String[] argument = {String.valueOf(idSeance)};
+		
+		Cursor cPresent = bdd.rawQuery(myQuery, argument);
+		
+		return cursorToMembre(cPresent);
+		}
 }

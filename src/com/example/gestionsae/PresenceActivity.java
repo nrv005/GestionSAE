@@ -44,8 +44,10 @@ public class PresenceActivity extends Activity{
 		
 		saedb.open();
 		listMembre = saedb.getAllMembre();
+		listPresent = saedb.getPresent(idSeance);
 		
 		afficheMembre(listMembre);
+		affichePresent(listPresent);
 		
 		/**
 		 * setOnItemClick : Gestion de la sélection des membres
@@ -112,7 +114,7 @@ public class PresenceActivity extends Activity{
 			}
 		});
 	}
-	
+
 	/**
 	 * afficheMembre : Affiche la liste des membres
 	 * @param listMembre : ArrayList<Membre> liste des membres de la table membre.
@@ -124,6 +126,28 @@ public class PresenceActivity extends Activity{
 		listViewMembre.setAdapter(adaptMembre);
 	}
 	
-	
+	private void affichePresent(ArrayList<Membre> lPresent) {
+		
+		//
+		int index = 0, position = 0;
+		
+		while (index < lPresent.size()) {
+			
+			int idPresent = lPresent.get(index).getId();
+			boolean boucle = true;
+			
+			while (boucle && position < listMembre.size()) {
+				
+				int idMembre = listMembre.get(position).getId();
+				position ++;
+				
+				if (idPresent == idMembre) {
+					listViewMembre.setItemChecked(position - 1, true);
+					boucle = false;
+				}
+			}
+			index ++;
+		}
+	}
 
 }
