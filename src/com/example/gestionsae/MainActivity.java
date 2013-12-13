@@ -45,7 +45,13 @@ public class MainActivity extends Activity {
 			}
 		});
 	}
-
+	
+	
+	/**
+	 * onCreateDialog : Paramétrage de la boite de dialogue pour définir une nouvelle date
+	 * Insertion de la date dans la table date
+	 * Passage à l'activité PresenceActivity avec comme paramétre le date sous forme de long
+	 */
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		
@@ -65,7 +71,11 @@ public class MainActivity extends Activity {
 			String newSeance = Integer.toString(year) + "-" + Integer.toString(monthOfYear + 1) + "-" + Integer.toString(dayOfMonth);
 			saedb.setNewSeance(newSeance);
 			
+			//Passage du paramétre id du jour date.id
+			long rowSeance = saedb.getDateId(newSeance);
+			
 			Intent presence = new Intent(MainActivity.this, PresenceActivity.class);
+			presence.putExtra("id_seance", rowSeance);
 			startActivity(presence);
 		}
 	};

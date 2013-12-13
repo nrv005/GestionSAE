@@ -1,6 +1,7 @@
 package com.example.gestionsae;
 
 import java.util.ArrayList;
+import java.util.Queue;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -95,6 +96,25 @@ public class GestionBdd {
 	}
 	
 	
+	/**
+	 * getDateId : renvoie l'identifiant pour un date donnée date.id
+	 * @param newSeance : String, date dont on veut obtenir l'id
+	 * @return id : long, identifiant.
+	 */
+	public long getDateId(String newSeance) {
+		
+		//Préparation de la requéte
+		String[] newDate = {newSeance};
+		String newWhere = "jour LIKE ?";
+		String[] newColonne = {DATE_COL_ID};
+		Cursor c = bdd.query(TBL_DATE, newColonne, newWhere, newDate, null, null, null);
+		
+		//Récupération des données de la requéte
+		c.moveToFirst();
+		int rowId = c.getInt(0);
+		
+		return (long) rowId;
+	}
 	
 /////////////////////////////////////////////////////////////////////////////////////////
 //Table des membres
@@ -144,5 +164,45 @@ public class GestionBdd {
 		//Ferme le cursor pour libérer les ressources puis renvoie l'ArrayList
 		cAllMembre.close();
 		return retAllMembre;
+	}
+
+	
+	
+	
+/////////////////////////////////////////////////////////////////////////////////////////
+//Table des presences
+/////////////////////////////////////////////////////////////////////////////////////////
+	
+	/**
+	 * setPresence : Insertion de la liaison date.did et membre.mid pour un membre et la séance
+	 * @param idSeance : long, id de la seance dans la table date pour fkdate
+	 * @param id : long, id du membre dans la table membre pour fknom;
+	 * @return void
+	 */
+	public void setPresence(long idSeance, long idMembre) {
+		
+		ContentValues values = new ContentValues();
+		values.put(PRESENCE_COL_FKDATE, idSeance);
+		values.put(PRESENCE_COL_FKNOM, idMembre);
+		bdd.insert(TBL_PRESENCE, PRESENCE_COL_FKDATE, values);
+	}
+	
+	
+	/**
+	 * suppPresence : Supprime une liaison presence.fkdate et presence.fknom 
+	 * @param idSeance : long, identifiant de la seance dans la table date = date.did
+	 * @param idMembre : long, identifiant du membre dans la table membre = membre.mid
+	 * @return void
+	 */
+	public void suppPresence(long idSeance, long idMembre) {
+		
+		//Préparation de la requète
+		String where = "fkdate = ? and fknom = ?";
+		//TODO Changer les fknom et fkdate en constante PRESENCE_COL_NOM et PRESENCE_COL_DATE
+		String sSeance = Long.toString(idSeance);
+		String sMembre = Long.toString(idMembre);
+		String[] valeur = {sSeance, sMembre};
+		
+		bdd.delete(TBL_PRESENCE, where, valeur);
 	}
 }

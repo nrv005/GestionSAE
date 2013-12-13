@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,11 +23,23 @@ public class PresenceActivity extends Activity{
 	ArrayList<Membre> listPresent = new ArrayList<Membre>();
 	ListView listViewMembre;
 	
+	long idSeance;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		/**
+		 * Récupération des données de l'Activité précédente
+		 * idSeance : long, correspond à l'identifiant de la seance dans la table date = date.did
+		 */
+		Bundle extra = this.getIntent().getExtras();
+		if (extra != null) {
+			idSeance = extra.getLong("id_seance");
+		}
+		
 		setContentView(R.layout.activity_pesence);
+		
 		
 		
 		saedb.open();
@@ -33,6 +47,26 @@ public class PresenceActivity extends Activity{
 		
 		afficheMembre(listMembre);
 		
+		/**
+		 * setOnItemClick : Gestion de la sélection des membres
+		 * Cocher : on ajoute l'entrée dans la table présence avec fkdate, fknom
+		 * Décocher : on supprime l'entrée dans la table présence.
+		 */
+		listViewMembre.setOnItemClickListener(new OnItemClickListener() {
+			
+			public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
+				Membre nMembre = new Membre();
+				nMembre = listMembre.get(position);
+				int idMembre = nMembre.getId();
+				
+				if (listViewMembre.isItemChecked(position)) {
+					saedb.setPresence(idSeance, idMembre);
+				}
+				else {
+					saedb.suppPresence(idSeance, idMembre);
+				}
+			}
+		});
 		
 		/**
 		 * Button.setOnClickListener : Gestion du bouton "Nouveau Membre"
