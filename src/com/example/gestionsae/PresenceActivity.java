@@ -59,6 +59,8 @@ public class PresenceActivity extends Activity{
 						dialog.cancel();
 					}
 				});
+				
+				builder.show();
 			}
 		});
 	}
