@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-public class PresenceActivity extends Activity{
+public class SelectionActivity extends Activity{
 	
 	GestionBdd saedb = new GestionBdd(this);
 	ArrayList<Membre> listMembre = new ArrayList<Membre>();
@@ -38,7 +38,7 @@ public class PresenceActivity extends Activity{
 			idSeance = extra.getLong("id_seance");
 		}
 		
-		setContentView(R.layout.activity_pesence);
+		setContentView(R.layout.activity_selection);
 		
 		
 		
@@ -83,7 +83,7 @@ public class PresenceActivity extends Activity{
 				
 				LayoutInflater inflater = getLayoutInflater();
 				final View dialogLayout = inflater.inflate(R.layout.new_membre, null);
-				AlertDialog.Builder builder = new AlertDialog.Builder(PresenceActivity.this);
+				AlertDialog.Builder builder = new AlertDialog.Builder(SelectionActivity.this);
 				builder.setView(dialogLayout);
 				
 				builder.setPositiveButton("Enregister", new DialogInterface.OnClickListener() {
