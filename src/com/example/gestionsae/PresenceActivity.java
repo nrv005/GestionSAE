@@ -60,6 +60,9 @@ public class PresenceActivity extends Activity{
 						EditText newPrenom = (EditText) dialogLayout.findViewById(R.id.editPrenom);
 						String prenom = newPrenom.getText().toString();
 						saedb.setNewMembre(nom, prenom);
+						
+						listMembre = saedb.getAllMembre();
+						afficheMembre(listMembre);
 					}
 				});
 				
