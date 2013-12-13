@@ -93,4 +93,24 @@ public class GestionBdd {
 		values.put(DATE_COL_JOUR, newSeance);
 		bdd.insert(TBL_DATE, DATE_COL_JOUR, values);
 	}
+	
+	
+	
+/////////////////////////////////////////////////////////////////////////////////////////
+//Table des membres
+/////////////////////////////////////////////////////////////////////////////////////////
+	
+	/**
+	 * setNewMembre : Ajoute un nouveau membre dans la table correspondate
+	 * @param nom : String, nom du nouveau membre
+	 * @param prenom : String, prenom du nouveau membre
+	 * @return void
+	 */
+	public void setNewMembre(String nom, String prenom) {
+		
+		ContentValues values = new ContentValues();
+		values.put(MEMBRE_COL_NOM, nom);
+		values.put(MEMBRE_COL_PRENOM, prenom);
+		bdd.insert(TBL_MEMBRE, MEMBRE_COL_NOM, values);
+	}
 }
