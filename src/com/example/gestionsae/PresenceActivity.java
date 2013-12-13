@@ -1,5 +1,7 @@
 package com.example.gestionsae;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -7,12 +9,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 public class PresenceActivity extends Activity{
 	
 	GestionBdd saedb = new GestionBdd(this);
+	ArrayList<Membre> listMembre = new ArrayList<Membre>();
+	ArrayList<Membre> listPresent = new ArrayList<Membre>();
+	ListView listViewMembre;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +29,10 @@ public class PresenceActivity extends Activity{
 		
 		
 		saedb.open();
+		listMembre = saedb.getAllMembre();
+		
+		afficheMembre(listMembre);
+		
 		
 		/**
 		 * Button.setOnClickListener : Gestion du bouton "Nouveau Membre"
@@ -64,5 +75,18 @@ public class PresenceActivity extends Activity{
 			}
 		});
 	}
+	
+	/**
+	 * afficheMembre : Affiche la liste des membres
+	 * @param listMembre : ArrayList<Membre> liste des membres de la table membre.
+	 * @return void
+	 */
+	private void afficheMembre(ArrayList<Membre> listMembre2) {
+		ArrayAdapter<Membre> adaptMembre = new ArrayAdapter<Membre>(this, android.R.layout.simple_list_item_multiple_choice, listMembre2);
+		listViewMembre = (ListView) findViewById(R.id.listPresence);
+		listViewMembre.setAdapter(adaptMembre);
+	}
+	
+	
 
 }

@@ -22,7 +22,7 @@ public class GestionBdd {
 	private static final String MEMBRE_COL_ID = "mid";
 	private static final String MEMBRE_COL_NOM = "nom";
 	private static final String MEMBRE_COL_PRENOM = "prenom";
-	private static final String MEMBR_COL_ORDER = "nom.prenom";
+	private static final String MEMBRE_COL_ORDER = "nom,prenom";
 	
 	private static final String TBL_PRESENCE = "presence";
 	private static final String PRESENCE_COL_FKDATE = "fkdate";
@@ -112,5 +112,37 @@ public class GestionBdd {
 		values.put(MEMBRE_COL_NOM, nom);
 		values.put(MEMBRE_COL_PRENOM, prenom);
 		bdd.insert(TBL_MEMBRE, MEMBRE_COL_NOM, values);
+	}
+	
+	/**
+	 * getAllMembre : Récupère tous les membres de la base de données
+	 * @param void
+	 * @return cursorToMembre : fonction private pour obtenir un ArrayList du Cursor
+	 */
+	public ArrayList<Membre> getAllMembre() {
+		
+		Cursor cAllMembre = bdd.query(TBL_MEMBRE, null, null, null, null, null, MEMBRE_COL_ORDER);
+		return cursorToMembre(cAllMembre);
+	}
+
+	private ArrayList<Membre> cursorToMembre(Cursor cAllMembre) {
+		
+		//Si la table des membres est vide
+		if (cAllMembre.getCount() == 0) return new ArrayList<Membre>(0);
+		
+		//Récupère les données de tous les membres dans un ArrayList
+		ArrayList<Membre> retAllMembre = new ArrayList<Membre>(cAllMembre.getCount());
+		cAllMembre.moveToFirst();
+		do {
+			Membre nMembre = new Membre();
+			nMembre.setId(cAllMembre.getInt(0));
+			nMembre.setNom(cAllMembre.getString(1));
+			nMembre.setPrenom(cAllMembre.getString(2));
+			retAllMembre.add(nMembre);
+		} while (cAllMembre.moveToNext());
+		
+		//Ferme le cursor pour libérer les ressources puis renvoie l'ArrayList
+		cAllMembre.close();
+		return retAllMembre;
 	}
 }
