@@ -9,33 +9,25 @@
     tools:context=".MainActivity" >
     
     <TextView 
-        android:id="@+id/txtSelectionDate"
+        android:id="@+id/txtPresentDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="Date"
+        android:text="Date Présents"
         android:textSize="20sp"/>
     
     <LinearLayout 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtSelectionDate"
-        android:layout_above="@+id/btPresenceNewMembre"
+        android:layout_below="@+id/txtPresentDate"
         android:layout_alignParentLeft="true"
         android:orientation="vertical">
         
         <ListView 
-            android:id="@+id/listSelection"
+            android:id="@+id/listPresent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:choiceMode="multipleChoice" />
     </LinearLayout>
-    
-    <Button 
-        android:id="@+id/btSelectionNewMembre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="Nouveau membre" />
 
 </RelativeLayout>

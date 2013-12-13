@@ -43,7 +43,10 @@ public class MainActivity extends Activity {
 				long idSeance = choixSeance.getId();
 				String dateSeance = choixSeance.getJour();
 				
-				//Intent 
+				Intent present = new Intent(MainActivity.this, PresentActivity.class);
+				present.putExtra("idSeance", idSeance);
+				present.putExtra("jourSeance", dateSeance);
+				startActivity(present);
 			}
 		});
 		

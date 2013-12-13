@@ -75,7 +75,7 @@ public class SelectionActivity extends Activity{
 		 * On clique sur le bouton pour afficher une boite de dialogue "R.layout.new_membre"
 		 * On obtient le nom et prénom, que l'on rajoute dans la table membre nom,prenom
 		 */
-		Button newMembre = (Button) findViewById(R.id.btPresenceNewMembre);
+		Button newMembre = (Button) findViewById(R.id.btSelectionNewMembre);
 		newMembre.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -122,7 +122,7 @@ public class SelectionActivity extends Activity{
 	 */
 	private void afficheMembre(ArrayList<Membre> listMembre2) {
 		ArrayAdapter<Membre> adaptMembre = new ArrayAdapter<Membre>(this, android.R.layout.simple_list_item_multiple_choice, listMembre2);
-		listViewMembre = (ListView) findViewById(R.id.listPresence);
+		listViewMembre = (ListView) findViewById(R.id.listSelection);
 		listViewMembre.setAdapter(adaptMembre);
 	}
 	
