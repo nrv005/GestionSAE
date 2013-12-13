@@ -61,33 +61,47 @@ public class GestionBdd {
 //Table des dates 
 /////////////////////////////////////////////////////////////////////////////////////////
 	/**
-	 * 
+	 * getAllDate : Obtenir toutes les dates de la table date
+	 * @param void
+	 * @return cursorToDate : fonction private pour obtenir un ArrayList<Date> du cursor
 	 */
 	public ArrayList<Date> getAllDate() {
 		Cursor cAllDate = bdd.query(TBL_DATE, null, null, null, null, null, DATE_COL_ORDER);
 		return cursorToDate(cAllDate);
 	}
 	
-	private ArrayList<Date> cursorToDate(Cursor cAllDate) {
+	
+	/**
+	 * cursorToDate : Transforme un cursor en ArrayList<Date>
+	 * @param cDate : Cursor, des dates à renvoyer
+	 * @return retAllDate : ArrayList<Date> contenant toutes les données des dates
+	 */
+	private ArrayList<Date> cursorToDate(Cursor cDate) {
 		
 		//Si la table des dates est vide
-		if (cAllDate.getCount() == 0) return new ArrayList<Date>(0);
+		if (cDate.getCount() == 0) return new ArrayList<Date>(0);
 		
 		//Récupération des données de toutes les dates
-		ArrayList<Date> retAllDate = new ArrayList<Date>(cAllDate.getCount());
-		cAllDate.moveToFirst();
+		ArrayList<Date> retAllDate = new ArrayList<Date>(cDate.getCount());
+		cDate.moveToFirst();
 		do {
 			Date nDate = new Date();
-			nDate.setId(cAllDate.getInt(0));
-			nDate.setJour(cAllDate.getString(1));
+			nDate.setId(cDate.getInt(0));
+			nDate.setJour(cDate.getString(1));
 			retAllDate.add(nDate);
-		} while (cAllDate.moveToNext());
+		} while (cDate.moveToNext());
 		
 		//Fermer le cursor pour rendre la mémoire puis retourner le résultat
-		cAllDate.close();
+		cDate.close();
 		return retAllDate;
 	}
-
+	
+	
+	/**
+	 * setNewSeance : Creation d'un nouvelle seance dans la table date
+	 * @param newSeance : String, nouvelle date
+	 * @return void
+	 */
 	public void setNewSeance(String newSeance) {
 		
 		ContentValues values = new ContentValues();

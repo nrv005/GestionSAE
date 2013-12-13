@@ -28,12 +28,11 @@ public class MainActivity extends Activity {
 		
 		saedb.open();
 		
-		ArrayList<Date> listSeance = new ArrayList<Date>();
-		listSeance = saedb.getAllDate();
+		afficheDate();
 		
-		ArrayAdapter<Date> adapteur = new ArrayAdapter<Date>(this, android.R.layout.simple_list_item_1,listSeance);
-		ListView listeSeance = (ListView) findViewById(R.id.listSeance);
-		listeSeance.setAdapter(adapteur);
+		Toast.makeText(getApplicationContext(), "activity onCreate", Toast.LENGTH_SHORT).show();
+
+		
 		
 		
 		Button newSeance = (Button) findViewById(R.id.btNewSeance);
@@ -47,6 +46,17 @@ public class MainActivity extends Activity {
 	}
 	
 	
+	
+	private void afficheDate() {
+		ArrayList<Date> listSeance = new ArrayList<Date>();
+		listSeance = saedb.getAllDate();
+		
+		ArrayAdapter<Date> adapteur = new ArrayAdapter<Date>(this, android.R.layout.simple_list_item_1,listSeance);
+		ListView listeSeance = (ListView) findViewById(R.id.listSeance);
+		listeSeance.setAdapter(adapteur);
+	}
+
+
 	/**
 	 * onCreateDialog : Paramétrage de la boite de dialogue pour définir une nouvelle date
 	 * Insertion de la date dans la table date
@@ -70,6 +80,10 @@ public class MainActivity extends Activity {
 		public void onDateSet(DatePicker view, int year, int monthOfYear,int dayOfMonth) {
 			String newSeance = Integer.toString(year) + "-" + Integer.toString(monthOfYear + 1) + "-" + Integer.toString(dayOfMonth);
 			saedb.setNewSeance(newSeance);
+			
+			
+			//Pour afficher la bonne liste de date au retour dans cette vue
+			afficheDate();
 			
 			//Passage du paramétre id du jour date.id
 			long rowSeance = saedb.getDateId(newSeance);
