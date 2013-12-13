@@ -21,6 +21,8 @@ public class PresenceActivity extends Activity{
 		setContentView(R.layout.activity_pesence);
 		
 		
+		saedb.open();
+		
 		/**
 		 * Button.setOnClickListener : Gestion du bouton "Nouveau Membre"
 		 * On clique sur le bouton pour afficher une boite de dialogue "R.layout.new_membre"
@@ -30,10 +32,10 @@ public class PresenceActivity extends Activity{
 		newMembre.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onClick(View arg0) {
+			public void onClick(View v) {
 				
 				LayoutInflater inflater = getLayoutInflater();
-				View dialogLayout = inflater.inflate(R.layout.new_membre, null);
+				final View dialogLayout = inflater.inflate(R.layout.new_membre, null);
 				AlertDialog.Builder builder = new AlertDialog.Builder(PresenceActivity.this);
 				builder.setView(dialogLayout);
 				
@@ -42,13 +44,11 @@ public class PresenceActivity extends Activity{
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						
-						EditText newNom = (EditText) findViewById(R.id.editNom);
+						EditText newNom = (EditText) dialogLayout.findViewById(R.id.editNom);
 						String nom = newNom.getText().toString();
-						EditText newPrenom = (EditText) findViewById(R.id.editPrenom);
+						EditText newPrenom = (EditText) dialogLayout.findViewById(R.id.editPrenom);
 						String prenom = newPrenom.getText().toString();
 						saedb.setNewMembre(nom, prenom);
-						// TODO Auto-generated method stub
-						
 					}
 				});
 				
