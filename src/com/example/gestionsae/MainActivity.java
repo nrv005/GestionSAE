@@ -43,10 +43,10 @@ public class MainActivity extends Activity {
 				long idSeance = choixSeance.getId();
 				String dateSeance = choixSeance.getJour();
 				
-				Intent present = new Intent(MainActivity.this, PresentActivity.class);
-				present.putExtra("idSeance", idSeance);
-				present.putExtra("jourSeance", dateSeance);
-				startActivity(present);
+				Intent presence = new Intent(MainActivity.this, PresentActivity.class);
+				presence.putExtra("idSeance", idSeance);
+				presence.putExtra("jourSeance", dateSeance);
+				startActivity(presence);
 			}
 		});
 		
@@ -105,7 +105,8 @@ public class MainActivity extends Activity {
 			long rowSeance = saedb.getDateId(newSeance);
 			
 			Intent presence = new Intent(MainActivity.this, SelectionActivity.class);
-			presence.putExtra("id_seance", rowSeance);
+			presence.putExtra("idSeance", rowSeance);
+			presence.putExtra("jourSeance", newSeance);
 			startActivity(presence);
 		}
 	};
