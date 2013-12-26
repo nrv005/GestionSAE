@@ -1,8 +1,10 @@
 package com.example.gestionsae;
 
 import java.text.SimpleDateFormat;
+//import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.SimpleFormatter;
 
 import android.os.Bundle;
 import android.view.View;
@@ -87,6 +89,16 @@ public class MainActivity extends Activity {
 		int btMonth = aujourdhui.get(Calendar.MONTH);
 		int btDay = aujourdhui.get(Calendar.DAY_OF_MONTH);
 		
+		/*SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String aujourdhui = dFormat.format(new java.util.Date());
+		String sYear = aujourdhui.substring(0, 4);
+		String sMonth = aujourdhui.substring(5, 7);
+		String sDay = aujourdhui.substring(8, 10);
+		
+		int btYear = Integer.parseInt(sYear);
+		int btMonth = Integer.parseInt(sMonth) - 1;
+		int btDay = Integer.parseInt(sDay);*/
+		
 		return new DatePickerDialog(this, pickerListener, btYear, btMonth, btDay);
 	}
 	
@@ -94,7 +106,12 @@ public class MainActivity extends Activity {
 		
 		@Override
 		public void onDateSet(DatePicker view, int year, int monthOfYear,int dayOfMonth) {
-			String newSeance = Integer.toString(year) + "-" + Integer.toString(monthOfYear + 1) + "-" + Integer.toString(dayOfMonth);
+			
+			//Enregistrement de la date au format 2013-01-01 en gardant les zéros.
+			String newSeance = Integer.toString(year);
+			String goodMonth = (monthOfYear < 9) ? "0" + Integer.toString(monthOfYear + 1) : Integer.toString(monthOfYear + 1);
+			String goodDay = (dayOfMonth < 10) ? "0" + Integer.toString(dayOfMonth) : Integer.toString(dayOfMonth);
+			newSeance = newSeance + "-" + goodMonth + "-" + goodDay;
 			saedb.setNewSeance(newSeance);
 			
 			
