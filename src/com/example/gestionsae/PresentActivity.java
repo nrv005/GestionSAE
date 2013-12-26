@@ -3,17 +3,18 @@ package com.example.gestionsae;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnLongClickListener;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class PresentActivity extends Activity{
+public class PresentActivity extends Activity {
 	
 	GestionBdd saedb = new GestionBdd(this);
 	long idSeance;
@@ -45,29 +46,27 @@ public class PresentActivity extends Activity{
 		
 		
 		//TODO Terminer la possibilité de modification lors d'un appui long sur la vue
-		/**
-		 * Un long click sur la view affiche un boite de dialogue pour valider la possibilité de modifier
-		 * la liste des présents pour cette séance.
-		 */
-		listViewPresent.setOnLongClickListener(new OnLongClickListener() {
-			
-			@Override
-			public boolean onLongClick(View v) {
-				
-				Toast.makeText(getApplicationContext(), "Appuie long", Toast.LENGTH_SHORT).show();
-				return true;
-			}
-		});
+	}
+	
+	public boolean onCreateOptionsMenu(Menu menu) {
 		
-		listViewPresent.setOnLongClickListener(new OnLongClickListener() {
+		MenuInflater inflatMenu = getMenuInflater();
+		inflatMenu.inflate(R.menu.present_menu, menu);
+		return true;
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		switch (item.getItemId()) {
+		case R.id.menuModif:
 			
-			@Override
-			public boolean onLongClick(View v) {
-				
-				Log.i("Test", "Appuis long sur la view");
-				Toast.makeText(getApplicationContext(), "Appuie long par listvie", Toast.LENGTH_SHORT).show();
-				return false;
-			}
-		});
+			Intent selection = new Intent(PresentActivity.this, SelectionActivity.class);
+			selection.putExtra("id_seance", idSeance);
+			selection.putExtra("j_seance", jourSeance);
+			startActivity(selection);
+			
+			return true;
+		}
+		return false;
 	}
 }
