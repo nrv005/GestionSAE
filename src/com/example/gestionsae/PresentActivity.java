@@ -9,10 +9,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class PresentActivity extends Activity {
 	
@@ -42,12 +40,14 @@ public class PresentActivity extends Activity {
 		ArrayAdapter<Membre> adaptPresent = new ArrayAdapter<Membre>(this, android.R.layout.simple_list_item_1, listPresent);
 		ListView listViewPresent = (ListView) findViewById(R.id.listPresent);
 		listViewPresent.setAdapter(adaptPresent);
-		
-		
-		
-		//TODO Terminer la possibilité de modification lors d'un appui long sur la vue
 	}
 	
+	
+	/**
+	 * onCreateOptionsMenu
+	 * Affichage d'un menu lors de l'appui sur le bouton menu
+	 * @return void
+	 */
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
 		MenuInflater inflatMenu = getMenuInflater();
@@ -55,11 +55,17 @@ public class PresentActivity extends Activity {
 		return true;
 	}
 	
+	/**
+	 * onOptionsItemSelected
+	 * Gestion des différents menu de la page présence.
+	 * @return void
+	 */
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
 		switch (item.getItemId()) {
 		case R.id.menuModif:
 			
+			//Modification des membres présent pour une date vers l'activité SelectionActivity
 			Intent selection = new Intent(PresentActivity.this, SelectionActivity.class);
 			selection.putExtra("id_seance", idSeance);
 			selection.putExtra("j_seance", jourSeance);
