@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtSelectionDate"
-        android:layout_above="@+id/btPresenceNewMembre"
+        android:layout_above="@+id/btSelectionNewMembre"
         android:layout_alignParentLeft="true"
         android:orientation="vertical">
         
