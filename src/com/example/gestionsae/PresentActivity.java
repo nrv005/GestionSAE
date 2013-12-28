@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class PresentActivity extends Activity {
 	
@@ -29,6 +30,9 @@ public class PresentActivity extends Activity {
 		}
 		
 		setContentView(R.layout.activity_present);
+		
+		TextView txtDate = (TextView) findViewById(R.id.txtPresentDate);
+		txtDate.setText(jourSeance + " - " + idSeance);
 		
 		saedb.open();
 		
@@ -67,8 +71,8 @@ public class PresentActivity extends Activity {
 			
 			//Modification des membres présent pour une date vers l'activité SelectionActivity
 			Intent selection = new Intent(PresentActivity.this, SelectionActivity.class);
-			selection.putExtra("id_seance", idSeance);
-			selection.putExtra("j_seance", jourSeance);
+			selection.putExtra("idSeance", idSeance);
+			selection.putExtra("jourSeance", jourSeance);
 			startActivity(selection);
 			
 			return true;

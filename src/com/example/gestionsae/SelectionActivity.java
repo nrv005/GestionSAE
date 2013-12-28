@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class SelectionActivity extends Activity{
 	
@@ -24,6 +25,7 @@ public class SelectionActivity extends Activity{
 	ListView listViewMembre;
 	
 	long idSeance;
+	String jourSeance;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +34,20 @@ public class SelectionActivity extends Activity{
 		/**
 		 * Récupération des données de l'Activité précédente
 		 * idSeance : long, correspond à l'identifiant de la seance dans la table date = date.did
+		 * jSeance : long, correspond à la date de la séance dans la table date = date.jour
 		 */
 		Bundle extra = this.getIntent().getExtras();
 		if (extra != null) {
-			idSeance = extra.getLong("id_seance");
+			idSeance = extra.getLong("idSeance");
+			jourSeance = extra.getString("jourSeance");
+			
 		}
 		
 		setContentView(R.layout.activity_selection);
 		
 		
+		TextView txtDate = (TextView) findViewById(R.id.txtSelectionDate);
+		txtDate.setText(jourSeance + " - " + idSeance);
 		
 		saedb.open();
 		listMembre = saedb.getAllMembre();
