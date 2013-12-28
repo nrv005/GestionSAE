@@ -99,6 +99,7 @@ public class SelectionActivity extends Activity{
 						
 						listMembre = saedb.getAllMembre();
 						afficheMembre(listMembre);
+						affichePresent(listPresent);
 					}
 				});
 				
