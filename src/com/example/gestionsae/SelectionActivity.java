@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,6 +54,8 @@ public class SelectionActivity extends Activity{
 		listMembre = saedb.getAllMembre();
 		listPresent = saedb.getPresent(idSeance);
 		
+		
+		//Affiche la date de la séance et le nombre de présent
 		txtDate = (TextView) findViewById(R.id.txtSelectionDate);
 		nbrPresent = saedb.countPresent(idSeance);
 		txtDate.setText(jourSeance + " - " + nbrPresent);
@@ -143,6 +147,11 @@ public class SelectionActivity extends Activity{
 		listViewMembre.setAdapter(adaptMembre);
 	}
 	
+	/**
+	 * affichePresent : Coche la case des membres présent à cette séance
+	 * @param lPresent : ArrayList<Membre> liste des membres présent pour la date
+	 * @return void
+	 */
 	private void affichePresent(ArrayList<Membre> lPresent) {
 		
 		//
@@ -165,6 +174,20 @@ public class SelectionActivity extends Activity{
 			}
 			index ++;
 		}
+	}
+	
+	/**
+	 * onKeyDown : Gestion de la touche retour
+	 * En cas d'appuie sur la touche retour, on revient sur la liste des séances.
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			Intent main = new Intent(SelectionActivity.this, MainActivity.class);
+			startActivity(main);
+		}
+		return true;
 	}
 
 }
