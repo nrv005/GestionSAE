@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +24,11 @@ public class SelectionActivity extends Activity{
 	ArrayList<Membre> listMembre = new ArrayList<Membre>();
 	ArrayList<Membre> listPresent = new ArrayList<Membre>();
 	ListView listViewMembre;
+	TextView txtDate;
 	
 	long idSeance;
 	String jourSeance;
+	int nbrPresent;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +48,13 @@ public class SelectionActivity extends Activity{
 		
 		setContentView(R.layout.activity_selection);
 		
-		
-		TextView txtDate = (TextView) findViewById(R.id.txtSelectionDate);
-		txtDate.setText(jourSeance + " - " + idSeance);
-		
 		saedb.open();
 		listMembre = saedb.getAllMembre();
 		listPresent = saedb.getPresent(idSeance);
+		
+		txtDate = (TextView) findViewById(R.id.txtSelectionDate);
+		nbrPresent = saedb.countPresent(idSeance);
+		txtDate.setText(jourSeance + " - " + nbrPresent);
 		
 		afficheMembre(listMembre);
 		affichePresent(listPresent);
@@ -70,9 +73,15 @@ public class SelectionActivity extends Activity{
 				
 				if (listViewMembre.isItemChecked(position)) {
 					saedb.setPresence(idSeance, idMembre);
+					
+					nbrPresent = saedb.countPresent(idSeance);
+					txtDate.setText(jourSeance + " - " + nbrPresent);
 				}
 				else {
 					saedb.suppPresence(idSeance, idMembre);
+
+					nbrPresent = saedb.countPresent(idSeance);
+					txtDate.setText(jourSeance + " - " + nbrPresent);
 				}
 			}
 		});

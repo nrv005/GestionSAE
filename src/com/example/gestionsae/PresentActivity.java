@@ -31,10 +31,12 @@ public class PresentActivity extends Activity {
 		
 		setContentView(R.layout.activity_present);
 		
-		TextView txtDate = (TextView) findViewById(R.id.txtPresentDate);
-		txtDate.setText(jourSeance + " - " + idSeance);
-		
 		saedb.open();
+
+		TextView txtDate = (TextView) findViewById(R.id.txtPresentDate);
+		int nbrPresent = saedb.countPresent(idSeance);
+		txtDate.setText(jourSeance + " - " + nbrPresent);
+		
 		
 		/**
 		 * Afficher la liste de Présent pour la date donnée jourSeance

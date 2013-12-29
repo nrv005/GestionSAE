@@ -1,7 +1,6 @@
 package com.example.gestionsae;
 
 import java.util.ArrayList;
-import java.util.Queue;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -241,4 +240,17 @@ public class GestionBdd {
 		
 		return cursorToMembre(cPresent);
 		}
+	
+	public int countPresent(long idSeance) {
+		
+		String[] newIdDate = {String.valueOf(idSeance)};
+		String newWhere = "fkdate LIKE ?";
+		String[] newColone = {PRESENCE_COL_FKDATE};
+		Cursor cPresent = bdd.query(TBL_PRESENCE, newColone, newWhere, newIdDate, null, null, null);
+		cPresent.moveToFirst();
+		
+		int result = cPresent.getCount();
+		
+		return result;
+	}
 }
