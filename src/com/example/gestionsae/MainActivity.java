@@ -1,10 +1,10 @@
 package com.example.gestionsae;
 
-import java.text.SimpleDateFormat;
 //import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.logging.SimpleFormatter;
+//import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -45,7 +44,16 @@ public class MainActivity extends Activity {
 				long idSeance = choixSeance.getId();
 				String dateSeance = choixSeance.getJour();
 				
-				Intent presence = new Intent(MainActivity.this, PresentActivity.class);
+				SimpleDateFormat jFormat = new SimpleDateFormat("yyyy-MM-dd");
+				String aujourdhui = jFormat.format(new java.util.Date());
+				
+				Intent presence;
+				if (aujourdhui.equals(dateSeance)) {
+					presence = new Intent(MainActivity.this, SelectionActivity.class);
+				} else {
+					presence = new Intent(MainActivity.this, PresentActivity.class);
+				}
+				
 				presence.putExtra("idSeance", idSeance);
 				presence.putExtra("jourSeance", dateSeance);
 				startActivity(presence);
