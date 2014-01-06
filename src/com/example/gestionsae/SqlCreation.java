@@ -40,6 +40,9 @@ public class SqlCreation extends SQLiteOpenHelper{
 			+ "FOREIGN KEY(" + TBL_PRESENCE_FKNOM + ") REFERENCES " + TBL_MEMBRE + "(" + TBL_MEMBRE_ID + ")"
 			+ ");";
 	
+	private static final String CREATE_INDEX_PRESENCE = "CREATE UNIQUE INDEX unicite ON " 
+			+ TBL_PRESENCE + "(" + TBL_PRESENCE_FKDATE + "," + TBL_PRESENCE_FKNOM + ");";
+	
 	private static final String PRAGMA = "PRAGMA foreign_keys=ON;";
 	
 	public SqlCreation(Context context, String name, CursorFactory factory, int version) {
@@ -53,6 +56,8 @@ public class SqlCreation extends SQLiteOpenHelper{
 	 * membre (mid, nom, prenom)
 	 * presence (pid, fkdate, fknom)
 	 * 
+	 * ajout d'un index unique pour supprimer les doublons sur la table presence
+	 * 
 	 * @param db : String, nom de la base de données
 	 */
 	@Override
@@ -65,6 +70,7 @@ public class SqlCreation extends SQLiteOpenHelper{
 		db.execSQL(CREATE_TBL_DATE);
 		db.execSQL(CREATE_TBL_MEMBRE);
 		db.execSQL(CREATE_TBL_PRESENCE);
+		db.execSQL(CREATE_INDEX_PRESENCE);
 	}
 	
 	
@@ -83,10 +89,12 @@ public class SqlCreation extends SQLiteOpenHelper{
 		db.execSQL("DROP TABLE " + TBL_PRESENCE);
 		db.execSQL("DROP TABLE " + TBL_MEMBRE);
 		db.execSQL("DROP TABLE " + TBL_DATE);
+		db.execSQL("DROP INDEX unicite");
 		
 		//Creation des nouvelles tables vierges
 		db.execSQL(CREATE_TBL_DATE);
 		db.execSQL(CREATE_TBL_MEMBRE);
 		db.execSQL(CREATE_TBL_PRESENCE);
+		db.execSQL(CREATE_INDEX_PRESENCE);
 	}
 }
